@@ -214,7 +214,7 @@ else:
 
 # Exercicio 10
 
-class Livro:
+'''class Livro:
     def __init__(self,titulo,autor,numPaginas):
         self.titulo = titulo
         self.autor = autor
@@ -235,13 +235,81 @@ class Livro:
                 print("\nO livro não está disponivel!")
 
     def devolver(self):
-        escolha = str(input("Você deseja devolver o livro?: s/n"))
+        escolha = str(input("\nVocê deseja devolver o livro?: s/n: "))
         if escolha == 's':
             print(f"Verifique se é esse o livro que deseja devolver: \ntitulo: {self.titulo} \nNome Autor: {self.autor} \nNumero de Paginas: {self.numPaginas}")
-            verdadeiro =str(input("escolher: sim/nao:"))
+            verdadeiro =str(input("\nescolher: sim/nao: "))
             if verdadeiro == 'sim':
                 print("Livro devolvido")
+            else:
+                print("\nMuito obrigado(a)")
            
 info = Livro("Depois das cinco", "Bruno", "100")
 info.emprestar()
-info.devolver()
+info.devolver()'''
+
+##########################################################################################################################
+
+# EXERCICIO 11
+
+class Banco:
+    def __init__(self, saldo ):
+       self.saldo = saldo
+       self.clientes = []
+      
+
+    def Entrar(self):
+        print("SEJA BEM VINDO AO BANCO:")
+        verificar = str(input("\nVocê possui uma conta?: s/n "))
+        if verificar == 's':
+            print("Abrir conta:")
+            nome = str(input("\nDigite seu nome: "))
+            agencia = int(input("Digite sua agencia: "))
+            senha = int(input("Digite sua senha: "))
+        else:
+            print("\nAbrir sua conta no banco: ")
+            nome = str(input("Digite seu nome: "))
+            cpf = int(input("Digite seu CPF: "))
+            nascimento = str(input("Digite sua data de nascimento: "))
+            senha =  int(input("Digite sua senha: "))
+            input("Aperte 'Enter' para entrar")
+        
+        print("\n--------------------------------------------------")
+        print(f"\nolá {nome}                   agencia: {agencia}")
+        print("\nO que deseja fazer?")
+        escolha = int(input("1- Sacar \n2-Depositar \n3-transferencia \n:"))
+        if escolha == 1:
+            print(self.sacar())
+        elif escolha == 2:
+            print(self.depositar())
+        else:
+            print(self.transferencia())
+
+    def sacar(self):
+        print("\n-------------------------------")
+        self.saque = float(input("Quanto você deseja sacar?: "))
+        self.saldo = self.saldo - self.saque
+        print(f"Você sacou: R${self.saque}")
+        print(f"O seu saldo agora é: {self.saldo}")
+
+    def depositar(self):
+        print("\n-------------------------------")
+        self.deposita = float(input("Quanto você desja depositar:  "))
+        self.saldo = self.saldo + self.deposita
+        print(f"Você depositou: R${self.deposita}")
+        print(f"O seu saldo é: R${self.saldo}")
+
+    def transferencia(self):
+        print("\n-------------------------------")
+        self.transferir = float (input("Quanto você deseja depositar:  "))
+        self.quem = str(input("Quem voce deseja transferir o dinheiro (nome): "))
+        self.saldo = self.saldo - self.transferir
+        print("Transferencia feita com sucesso!")
+        print(f"Você transferiu R${self.transferir} para a conta de {self.quem}")
+
+
+   
+
+teste = Banco(1400)    
+teste.Entrar()
+  
