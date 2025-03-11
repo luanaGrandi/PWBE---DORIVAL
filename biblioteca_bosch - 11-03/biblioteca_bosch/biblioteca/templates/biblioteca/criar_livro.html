@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>formulario de livros</title>
+</head>
+<body>
+    <!-- esssa pagina apos o usuario clicar em "Cadastrar livro novo" ele sera direcionado  a essa pagina, onde sera criado um formulario automatico
+    onde o usuario possa  preencher os campos como: titulo, autor, ano e outros comentarios. e apos clicar no botão "enviar" as infromaçoes serão salvas e sera salva na pagina inicial -->
+    <h1>formulario de livros</h1>
+    <form  method="post">
+        {% csrf_token %}
+        <!-- cria um forms automatico -->
+        {{form.as_p}}
+        <a href="{% url 'lista_livros'%}"><button type="submit">Enviar</button></a>
+    </form>
+</body>
+</html>
+
+
+
+<!-- estio da pagina -->
+<style>
+
+   
+h1{
+    color: rgb(190, 134, 255);
+    margin-left: 78vh;
+    margin-top: 4vh;
+    font-size: 4vh;
+    text-decoration: underline;
+    
+}
+form{
+    margin-left: 80vh;
+    margin-top: 3vh;
+}
+
+input{
+    margin-left: 2vh;
+    margin-top: 3vh;
+    width: 25vh;
+    height: 2vh;
+    
+}
+
+label{
+    color: rgb(130, 79, 189) ;
+    font-size: 2vh;
+}
+
+#id_ano{
+    margin-left: 3vh;
+}
+
+#id_outros{
+    margin-left: 1vh;
+}
+
+button{
+    background-color:  rgb(159, 123, 201);
+    color: white;
+    width: 10vh;
+    height: 3vh;
+    cursor: pointer;
+    margin-left: 17vh;
+    margin-top: 3vh;
+}
+</style>

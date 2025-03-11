@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lista de livros</title>
+</head>
+<body>
+   
+    <!-- titulo e sub titulo da pagina -->
+    <h1>Bem vindo a Biblioteca Bosch</h1>
+    <h3>lista de livros cadastrados</h3>
+
+    <!-- flitro dos livros -->
+    <form method="get" action="{% url 'filtro_livros' %}">
+        <!-- caixa de texto, para o usuario digitar o que deseja procurar -->
+        <input type="text" name="titulo" id="titulo"  placeholder="Qual livro voce deseja pesquisar: " value="{{ request.GET.titulo }}">
+        <!-- botao para fazer a pesquisa -->
+        <button type="submit">Pesquisar</button>
+    </form>
+    <!-- um link para o usuario cadastrar mais livros novos -->
+    <a class="cadastrar" href="{% url 'criar_livro'  %}"> Cadastrar livro novo</a>
+    <ul>
+        {% for i in cadastro %}
+        <!-- lista para os links de deletar e editar os livros -->
+            <li>
+                <!-- para mostrar na tela  o titulo e o autor na pagina -->
+                {{i.titulo}} - {{i.autor}}
+                <!-- indica o caminho para quando clicar em um desses links -->
+                <a href="{% url 'deletar_livro'  i.pk %}">Deletar </a>
+                <a href="{% url 'editar_livro'  i.pk %}">editar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+<!-- estilo da pagina -->
+<style>
+
+*{
+    margin: 0;
+    padding: 0;
+} 
+   
+h1{
+    color: rgb(190, 134, 255);
+    margin-left: 70vh;
+    margin-top: 4vh;
+    font-size: 4vh;
+    text-decoration: underline;
+    
+}
+
+h3{
+    color: rgb(130, 79, 189);
+    margin-left: 80vh;
+    font-size: 3vh;
+    margin-top: 0vh;
+}
+
+input{
+    margin-left: 78vh;
+    margin-top: 3vh;
+    width: 25vh;
+    height: 2vh;
+    border-radius: 1vh 2px;
+}
+
+button{
+    background-color:  rgb(159, 123, 201);
+    color: white;
+    width: 10vh;
+    height: 3vh;
+    cursor: pointer;
+}
+
+
+
+.cadastrar{
+    margin-top: 3vh;
+    margin-left: 85vh;
+    font-size: 2vh;
+    color:  rgb(159, 123, 201);
+    
+}
+
+ul{
+    margin-left: 79vh;
+    margin-top: 4vh;
+    font-size: 2vh;
+}
+
+a{
+    margin-left: 2vh;
+    color: rgb(130, 79, 189) ;
+}
+
+</style>

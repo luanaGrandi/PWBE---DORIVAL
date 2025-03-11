@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>apagar livro</title>
+</head>
+<body>
+
+    <!-- titulo que aparece o nome do livro que o usuario selecionou para apagar -->
+    <h1>Você deseja apagar o livro {{livro.titulo}} ?</h1>
+    <form method="post">
+        <!-- função para apagar o livro -->
+        {% csrf_token %}
+        <button type="submit">sim</button>
+    </form>
+    <!-- se o usuario clicar em "não" ele voltara para a pagina inicial -->
+    <a href="{% url 'lista_livros'%}"><button>não</button></a>
+
+</body>
+</html>
+
+<!-- estilo da pagina -->
+<style>
+
+h1{
+    color: rgb(190, 134, 255);
+    margin-left: 20vh;
+    margin-top: 4vh;
+    font-size: 4vh;
+    text-decoration: underline;
+    
+}
+
+button{
+    background-color:  rgb(159, 123, 201);
+    color: white;
+    width: 10vh;
+    height: 3vh;
+    cursor: pointer;
+    margin-top: 4vh;
+    margin-left: 40vh;
+}
+</style>
