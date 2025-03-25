@@ -1,13 +1,14 @@
 from django.db import models
 
-# Create your models here.
 
+#  criar o modelo 
 class Carro(models.Model):
     nome = models.CharField(max_length=255)
     marca = models.CharField(max_length=255)
     qntRodas = models.PositiveIntegerField()
     ano = models.PositiveIntegerField()
     cor = models.CharField(max_length=255)
+    # lista de escolha para combustivel
     escolha_combustivel = (
         ('GASOLINA', 'Gasolina'),
         ('ETANOL', 'Etanol'),
