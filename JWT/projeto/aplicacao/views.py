@@ -105,9 +105,11 @@ def criar_usuario(request):
         animais = animais,
         categoria = escolha_categoria,
     )
+    # mensagem de sucesso
     return Response({'mensagem': f'Usuario {username} criado com sucesso'},  status=status.HTTP_201_CREATED)
 
 
+#  funçaõ para logar o usuario com seu nome e senha, e se estiver correto, gerar um token para o usuario
 @api_view(['POST'])
 def logar_usuario(request):
     username = request.data.get('username')
@@ -116,12 +118,14 @@ def logar_usuario(request):
     usuario = authenticate(username=username, password = senha)
 
     if usuario:
+    #    geramento de token para o usuario 
        refresh =  RefreshToken.for_user(usuario)
        return Response({
            'acesso': str(refresh.access_token),
             'refresh' : str(refresh)
         }, status=status.HTTP_200_OK)
     
+    # mensagem de erro
     else:
         return Response({'erro': 'Usuario ou/e senha incorreto(s)'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -134,6 +138,7 @@ def listar_usuario(request):
     return Response(serializer.data)
 
 
+# def para criar o usuario e salvar
 @api_view(['POST']) #criar
 @permission_classes([IsAuthenticated])
 def create_usuario(resuest):
@@ -145,28 +150,33 @@ def create_usuario(resuest):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
+# def para fazer a alteração de alguma informação do usuario
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_usuario(request, pk):
     try:
         usuarios = UsuarioDS16.objects.get(pk=pk)
     except UsuarioDS16.DoesNotExist:
+    #    caso o usuario não existir oou não for encontrado
        return Response({'Erro': 'Usuario não encontrado'}, status=status.HTTP_404_NOT_FOUND)
     
+    # serializar os dados
     serializer = UsuarioSerializer(usuarios, data= request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# def para deletear um usuario ja existente
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_usuario(request, pk):
     try:
         usuarios = UsuarioDS16.objects.get(pk=pk)
     except UsuarioDS16.DoesNotExist:
+    #    caso o usuario não encontrado
        return Response({'Erro': 'usuario não encontrado'}, status=status.HTTP_404_NOT_FOUND)
     
     usuarios.delete()
+    # mensagem de verificação
     return Response({'Mensagem':'O  usuario foi apagado'}, status=status.HTTP_200_OK)

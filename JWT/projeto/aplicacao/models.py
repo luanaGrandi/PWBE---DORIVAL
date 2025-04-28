@@ -12,12 +12,15 @@ class UsuarioDS16(AbstractUser):
 
 
     # MINHA ATIVIDADE
+
+    # campo para o usuario colocar os seus dados
     nome = models.CharField(max_length=255)
     biografia = models.TextField(null=True, blank=True)
     idade = models.PositiveIntegerField( null=True, blank=True)
     telefone = models.PositiveBigIntegerField(null=True, blank=True)
     endereco = models.CharField(max_length=255)
     animais = models.PositiveIntegerField(null=True, blank=True)
+    # filtro de categorias
     escolha_categoria = (
         ('Ensino fundamental', 'Ensino fundamental'),
         ('ensino Médio', 'ensino Médio'),
