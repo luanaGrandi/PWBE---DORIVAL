@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from .models import Usuario, Sala, ReservaAmbiente, Disciplina
-from .serializers import UsuarioSerializer, DisciplinaSerializer, ReservaAmbienteSerializer,LoginSerializer
+from .serializers import UsuarioSerializer, DisciplinaSerializer, ReservaAmbienteSerializer,LoginSerializer, SalaSerializer
 from .permissions import IsGestor, IsProfessor, IsDonoOuGestor
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.http import Http404
 
 class UsuarioListCreate(ListCreateAPIView):
     queryset = Usuario.objects.all()
@@ -29,6 +30,8 @@ class DisciplinaListCreate(ListCreateAPIView):
         if self.request.method == 'GET':
             return [IsAuthenticated()]
         return [IsGestor()]
+    
+ 
 
 # essa class vai  fazer o GET, PUT, DELETE e o PACTH
 class DisciplinaRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
@@ -73,6 +76,8 @@ class ReservaAmbienteRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsDonoOuGestor]
     lookup_field = 'pk'
 
+   
+
 # listagem da reserva de ambientes que o professor tem
 class ReservaAmbienteProfessorList(ListAPIView):
 
@@ -82,8 +87,32 @@ class ReservaAmbienteProfessorList(ListAPIView):
     def get_queryset(self):
         # filtrar as reservas de um professor especifico
         return ReservaAmbiente.objects.filter(professor = self.request.user)
+   
     
-
+# login do admin
 class loginView(TokenObtainPairView):
     serializer_class = LoginSerializer
 
+
+# essa class ira listar e criar salas, mas epenas o gestor pode criar
+class salasListCreate(ListCreateAPIView):
+    queryset = Sala.objects.all()
+    serializer_class = SalaSerializer
+    # só o gestor tera permissao de criar e listar
+    permission_classes = [IsGestor]
+
+   
+
+# essa class vai consultar as salas pelo Id, e fazer o GET, PUT e o DELETE
+class SalaRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    queryset = Sala.objects.all()
+    serializer_class = SalaSerializer
+    permission_classes = [IsGestor]
+    lookup_field = 'pk'
+
+    def get_object(self):
+        try:
+            super().get_object()
+        except Exception:
+            #return Response({'erro': 'Sala não encontrada'},status=status.HTTP_404_NOT_FOUND)
+            raise Http404({'Erro': 'Sala não encontrada'})

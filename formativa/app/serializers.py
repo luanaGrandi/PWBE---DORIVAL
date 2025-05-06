@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Usuario, Disciplina, ReservaAmbiente
+from .models import Usuario, Disciplina, ReservaAmbiente, Sala
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-class UsuarioSerializer(serializers.ModelSerializere):
+class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = '__all__'
@@ -20,7 +20,7 @@ class ReservaAmbienteSerializer(serializers.ModelSerializer):
 # autenticação do login
 class LoginSerializer(TokenObtainPairSerializer):
     username = serializers.CharField()
-    senha = serializers.CharField(write_only = True)
+    password = serializers.CharField(write_only = True)
 
     # validar os dados, ver se o nome e senha estão corretos
     def validate(self, attrs):
@@ -32,4 +32,8 @@ class LoginSerializer(TokenObtainPairSerializer):
             'tipo': self.user.tipo
         }
         return data
-    
+
+class SalaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sala
+        fields = '__all__'
