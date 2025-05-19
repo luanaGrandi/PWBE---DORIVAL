@@ -6,6 +6,12 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = '__all__'
+        
+    def create(self, validated_data):
+        user = Usuario(**validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
     
 class DisciplinaSerializer(serializers.ModelSerializer):
     class Meta:
